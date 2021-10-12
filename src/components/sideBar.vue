@@ -4,7 +4,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h4 font-weight-bold primary--text"
-            >Ro Work</v-list-item-title
+            >Ro Learn</v-list-item-title
           >
           <v-list-item-subtitle class="secondary--text"
             >这是你的错题</v-list-item-subtitle
@@ -14,14 +14,14 @@
     </v-list>
     <v-divider></v-divider>
     <v-list nav>
-      <v-list-item-group color="primary" v-model="selected">
+      <v-list-item-group color="primary" v-model="selected" mandatory>
         <v-list-item v-for="(item, i) in navItem" :key="i">
           <v-list-item-content>
             <v-list-item-title class="nav-item">
               <v-icon>
                 {{ selected === i ? item.iconSele : item.icon }}
               </v-icon>
-              {{ item.name }}
+              <span class="ml-2">{{ item.name }}</span>
             </v-list-item-title></v-list-item-content
           >
         </v-list-item>
@@ -67,6 +67,9 @@ export default {
       },
     ];
   },
+  watch: {
+    selected() {},
+  },
 };
 </script>
 
@@ -76,6 +79,9 @@ export default {
   overflow: hidden;
 
   .nav-item {
+    display: flex;
+    align-items: center;
+
     font: {
       weight: 600;
     }

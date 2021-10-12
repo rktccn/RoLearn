@@ -3,8 +3,9 @@
     ><v-navigation-drawer app light class="sidebar-nav elevation-3"
       ><side-bar></side-bar
     ></v-navigation-drawer>
-    <v-main>
-      <v-container fluid><router-view></router-view> </v-container></v-main
+    <v-main class="grey lighten-3">
+      <v-container fluid :style="{ height: '100%' }"
+        ><router-view></router-view> </v-container></v-main
   ></v-app>
 </template>
 

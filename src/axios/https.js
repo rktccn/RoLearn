@@ -4,7 +4,7 @@ import axios from "axios";
 import NProgress from "nprogress";
 
 // 接口地址
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 axios.defaults.timeout = 15000;
 
 // 添加 请求头 和 进度条 NProgress.start()
@@ -19,7 +19,7 @@ axios.interceptors.response.use(
     // 隐藏 进度条
     NProgress.done();
 
-    return res;
+    return res.data;
   },
   (error) => {
     return error.request;
