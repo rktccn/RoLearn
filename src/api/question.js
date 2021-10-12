@@ -24,3 +24,15 @@ export function searchApiThree(value) {
     },
   });
 }
+
+export function searchApiFour(value) {
+  return axios({
+    method: "post",
+    url: "https://api.wanshiwu.asia/api/app/search",
+    data: {
+      question: value,
+      uid: "14165",
+      token: "NmI9nEg6qhIgIPVxsznHpvycWvmfUhQG",
+    },
+  });
+}
