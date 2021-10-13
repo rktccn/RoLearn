@@ -10,11 +10,8 @@
             <v-list-item-content>
               <v-list-item-title
                 class="text-h4 font-weight-bloder"
-                v-html="'答案' + (i + 1) + ':&nbsp' + item.details.answer"
+                v-html="'答案' + (i + 1) + ':&nbsp' + item.answer"
               ></v-list-item-title>
-              <v-list-item-subtitle v-if="item.details.options"
-                >选项:&nbsp;{{ item.details.options }}</v-list-item-subtitle
-              >
             </v-list-item-content>
           </v-list-item>
         </div>
@@ -62,7 +59,7 @@
 </template>
 
 <script>
-import { searchApiTwo, searchApiFour } from "../api/question";
+import { searchApiTwo, searchApiFive } from "../api/question";
 
 export default {
   name: "search",
@@ -86,52 +83,51 @@ export default {
         return;
       }
 
-      let pattern = /h.+p\.ananas\.chaoxing\.com.+png/;
-      let tmp = [];
-      vm.searchApiFour(vm.question)
-        .then((res) => {
-          vm.text = res.message;
-          vm.snackbar = true;
-          if (res.code !== 200) return;
-          tmp = res.data;
-          tmp.forEach((item) => {
-            let str = item.details.answer;
-            if (pattern.test(str)) {
-              item.details.answer =
-                '<a href="' +
-                str.match(pattern)[0] +
-                '" target="b">查看答案</a>';
-            }
-          });
-        })
-        .then(() => {
-          vm.searchApiTwo(vm.question).then((res) => {
-            let temp = [
-              {
-                details: {
-                  answer: null,
-                  question: null,
-                },
-              },
-            ];
-            temp[0].details.answer = res.da;
-            temp[0].details.question = vm.question;
+      let da = [];
+      let tmp = { answer: null, question: null };
+      let isAnswerAble = 0;
 
-            temp.push(...tmp);
-            vm.answer = temp;
+      vm.searchApiFive(vm.question).then((res) => {
+        if (res.code !== 1) {
+          return;
+        }
 
-            this.$refs.answer.style.width = "50%";
-            this.$refs.question.style.width = "50%";
-          });
-        });
+        isAnswerAble = 1;
+        let temp = tmp;
+        temp.answer = res._source.da;
+        temp.question = res._source.keyword;
+
+        da.push(temp);
+      });
+
+      vm.searchApiTwo(vm.question).then((res) => {
+        if (res.code !== 1) {
+          if (isAnswerAble === 0) {
+            vm.text = "没有找到答案";
+            vm.snackbar = true;
+          }
+          return;
+        }
+
+        isAnswerAble = 1;
+        let temp = tmp;
+        temp.answer = res.da;
+        temp.question = vm.question;
+
+        da.push(temp);
+
+        vm.answer = da;
+
+        this.$refs.answer.style.width = "50%";
+        this.$refs.question.style.width = "50%";
+      });
     },
 
     searchApiTwo(value) {
       return searchApiTwo(value);
     },
-
-    searchApiFour(value) {
-      return searchApiFour(value);
+    searchApiFive(value) {
+      return searchApiFive(value);
     },
   },
 };

@@ -36,3 +36,11 @@ export function searchApiFour(value) {
     },
   });
 }
+
+export function searchApiFive(value) {
+  return axios.get("https://huan.fm210.cn/api/answer", {
+    params: {
+      keyword: value,
+    },
+  });
+}
