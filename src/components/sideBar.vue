@@ -17,12 +17,14 @@
       <v-list-item-group color="primary" v-model="selected" mandatory>
         <v-list-item v-for="(item, i) in navItem" :key="i">
           <v-list-item-content>
-            <v-list-item-title class="nav-item">
-              <v-icon>
-                {{ selected === i ? item.iconSele : item.icon }}
-              </v-icon>
-              <span class="ml-2">{{ item.name }}</span>
-            </v-list-item-title></v-list-item-content
+            <router-link :to="item.link">
+              <v-list-item-title class="nav-item">
+                <v-icon>
+                  {{ selected === i ? item.iconSele : item.icon }}
+                </v-icon>
+                <span class="ml-2">{{ item.name }}</span>
+              </v-list-item-title></router-link
+            ></v-list-item-content
           >
         </v-list-item>
       </v-list-item-group>
